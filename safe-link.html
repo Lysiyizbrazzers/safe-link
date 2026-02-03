@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Валентинка 💖</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px;
+    text-align: center;
+}
+
+.gif-area {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 12px 22px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-block;
+    transform-origin: center;
+    transition: transform 0.25s ease;
+}
+
+#yes {
+    background: #ff4d6d;
+    color: white;
+    margin-right: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+#no {
+    background: #ccc;
+    position: relative;
+    z-index: 1;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- Гифки -->
+    <div class="gif-area">
+
+        <!-- Миньон -->
+        <div id="minion">
+            <div class="tenor-gif-embed"
+                 data-postid="10586631440146974859"
+                 data-share-method="host"
+                 data-aspect-ratio="0.935743"
+                 data-width="100%">
+                <a href="https://tenor.com/view/minion-minion-loves-loves-love-i-love-you-gif-10586631440146974859">
+                    Minion GIF
+                </a> from <a href="https://tenor.com/search/minion-gifs">Minion GIFs</a>
+            </div>
+        </div>
+
+        <!-- Новый салют -->
+        <div id="firework" class="hidden">
+            <div class="tenor-gif-embed"
+                 data-postid="792800917588416779"
+                 data-share-method="host"
+                 data-aspect-ratio="1"
+                 data-width="100%">
+                <a href="https://tenor.com/view/%D1%84%D0%B5%D0%B9%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BA-%D0%BB%D1%8E%D0%B1%D0%BE%D0%B2%D1%8C-%D1%81%D0%B5%D1%80%D0%B4%D1%86%D0%B5-zheki-%D0%B6%D0%B5%D0%BA%D0%B8-gif-792800917588416779">
+                    фейерверк любовь GIF
+                </a> from <a href="https://tenor.com/search/%D1%84%D0%B5%D0%B9%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BA-gifs">фейерверк GIFs</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Карточка -->
+    <div class="card">
+        <h1 id="question">Будешь моей валентинкой? 💕</h1>
+        <button id="yes">Да</button>
+        <button id="no">Нет</button>
+    </div>
+
+</div>
+
+<script async src="https://tenor.com/embed.js"></script>
+
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn  = document.getElementById("no");
+const question = document.getElementById("question");
+
+const minion = document.getElementById("minion");
+const firework = document.getElementById("firework");
+
+let scaleYes = 1;
+const originalScale = 1; 
+let noIndex = 0;
+const maxNoClicks = 6; // после 6-ти нажатий "Нет" кнопка исчезает
+
+const noTexts = [
+    "Точно нет?",
+    "Подумай ещё",
+    "и ещё",
+    "и ещё раз хорошо подумай)",
+    "Ну давай уже 😏",
+    "я ждууу"
+];
+
+/* НЕТ → увеличение кнопки "Да", после 6-го нажатия кнопка исчезает */
+noBtn.addEventListener("click", () => {
+    noIndex++;
+
+    if(noIndex < maxNoClicks){
+        scaleYes += 0.15; // небольшое увеличение
+        yesBtn.style.transform = `scale(${scaleYes})`;
+        question.textContent = noTexts[(noIndex-1) % noTexts.length];
+    } else {
+        // если нажали "Нет" на 6-й раз или позже
+        noBtn.classList.add("hidden");
+        question.textContent = "Кнопка 'Нет' больше недоступна 😏";
+    }
+});
+
+/* ДА → миньон скрывается, салют появляется, кнопка возвращается */
+yesBtn.addEventListener("click", () => {
+    question.textContent = "урааа! 💖";
+    minion.classList.add("hidden");
+    firework.classList.remove("hidden");
+
+    // вернуть кнопку "Да" к исходному размеру
+    scaleYes = originalScale;
+    yesBtn.style.transform = `scale(${originalScale})`;
+});
+</script>
+
+</body>
+</html>
